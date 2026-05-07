@@ -49,8 +49,8 @@ re_installs AS (
         'reinstall', 'Re-installs'
     )
     AND CONVERT_TZ(ac.created_at, '+00:00', '+05:30')
-        BETWEEN '2026-01-01 00:00:00' AND '2026-01-31 23:59:59'
-    AND CONVERT_TZ(cs.created_on, '+00:00', '+05:30') < '2026-01-01 00:00:00' 
+        BETWEEN '2026-01-01 00:00:00' AND '2026-01-31 23:59:59' 
+    AND CONVERT_TZ(cs.created_on, '+00:00', '+05:30') BETWEEN '2026-01-01 00:00:00' AND '2026-01-31 23:59:59'
     
     -- Exclude stores that later uninstalled within the same range
     AND NOT EXISTS (
@@ -76,5 +76,6 @@ re_installs AS (
     AND cs.plan_display_name NOT LIKE '%Development%'
 )
 
-SELECT store_client_id,store_name FROM re_installs
--- SELECT store_client_id, store_name FROM fresh_installs
+-- SELECT store_client_id,store_name FROM re_installs
+SELECT store_client_id, store_name FROM fresh_installs WHERE store_client_id NOT IN (SELECT store_client_id FROM re_installs)
+
