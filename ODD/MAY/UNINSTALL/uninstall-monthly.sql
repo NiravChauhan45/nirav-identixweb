@@ -32,23 +32,25 @@ WITH main_data AS (
 
 	    /* Plan exclusions */
 	    AND cs.shop_plan NOT IN (
-		'Development', 'Staff', 'Developer Preview', 'Trial',
-		'Shopify Plus Partner Sandbox', 'affiliate', 'partner_test',
-		'plus_partner_sandbox', 'Staff Business'
+			'Development','Staff','Developer Preview','Trial',
+			'Shopify Plus Partner Sandbox','affiliate','staff',
+			'partner_test','trial','plus_partner_sandbox', 'Staff Business',
+			'cancelled','frozen'
 	    ) 
 	    AND (
-	    cs.plan_display_name IS NULL
-	    OR cs.plan_display_name NOT IN (
-		'Development','Staff','Developer Preview','Trial',
-		'Shopify Plus Partner Sandbox','affiliate','staff',
-		'partner_test','trial','plus_partner_sandbox','Staff Business'
+			cs.plan_display_name IS NULL
+			OR cs.plan_display_name NOT IN (
+				'Development','Staff','Developer Preview','Trial',
+				'Shopify Plus Partner Sandbox','affiliate','staff',
+				'partner_test','trial','plus_partner_sandbox', 'Staff Business'
+		)
 	    )
-	)
 	    AND (
-	    cs.plan_display_name IS NULL
-	    OR cs.plan_display_name NOT LIKE '%Development%'
-	)
+		cs.plan_display_name IS NULL
+		OR cs.plan_display_name NOT LIKE '%Development%'
+	    )
 	    AND cs.shop_plan NOT LIKE '%Development%'
+		AND cs.email NOT LIKE '%@identixweb.in' AND cs.email NOT LIKE '%@elookinto.org'
 ),
 same_month AS (
 	SELECT
